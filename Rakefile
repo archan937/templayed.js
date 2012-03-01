@@ -35,8 +35,4 @@ task :release, :version do |task, args|
 
   # Compress release using YUI compressor
   IO.popen "java -jar lib/yuicompressor-2.4.2.jar -v #{release_dir}/templayed.js -o #{release_dir}/templayed.min.js"
-
-  # Update latest release dir
-  FileUtils.rm_r(latest_dir) if File.exists?(latest_dir)
-  FileUtils.cp_r("#{release_dir}/.", latest_dir)
 end
