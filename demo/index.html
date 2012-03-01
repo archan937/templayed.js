@@ -5,14 +5,61 @@
     <title>
       archan937@github: /templayed.js - demo
     </title>
-    <script src="../src/templayed.js"  type="text/javascript"></script>
+    <script src="../src/templayed.js" type="text/javascript"></script>
+    <script>
+      templates = [
+        {
+          template: "<p>My name is {{name}}!<p>",
+          variables: {name: "Paul Engel"}
+        },
+        {
+          template: "<p>My name is {{person.first_name}} {{person.last_name}}!<p>",
+          variables: {person: {first_name: "Paul", last_name: "Engel"}}
+        },
+        {
+          template: "{{name}}<ul>{{#names}}<li>{{name}}</li>{{/names}}</ul>{{^names}}Sorry, no people to list!{{/names}}",
+          variables: {names: []}
+        },
+        {
+          template: "<p>{{name}}</p><ul>{{#names}}<li>{{name}}</li>{{/names}}</ul>{{^names}}Sorry, no people to list!{{/names}}<p>{{name}}</p>",
+          variables: {name: "Chunk Norris", names: [{name: "Paul"}, {name: "Engel"}]}
+        },
+        {
+          template: "<ul>{{#names}}<li>{{.}}{{foo}}</li>{{/names}}</ul>",
+          variables: {names: ["Paul", "Engel"]}
+        },
+        {
+          template: "<ul>{{#names}}<li>{{#fullName}}</li>{{/names}}</ul>",
+          variables: {
+            names: [{firstName: "Paul", lastName: "Engel"}, {firstName: "Chunk", lastName: "Norris"}],
+            fullName: function() {
+              return this.lastName + ", " + this.firstName;
+            }
+          }
+        }
+      ];
+      escape = function(html) {
+        return html.replace(/&/g,'&amp;').
+                    replace(/>/g,'&gt;').
+                    replace(/</g,'&lt;').
+                    replace(/"/g,'&quot;')
+      };
+    </script>
   </head>
   <body>
+    <h2>Demo page of templayed.js</h2>
     <script>
-      document.write(templayed("<p>My name is {{name}}!<p>", {name: "Paul Engel"}));
-    </script>
-    <script>
-      document.write(templayed("Listing:<ul>{{#names}}<li>{{name}}</li>{{/names}}<ul>", {names: [{name: "Paul"}, {name: "Engel"}]}));
+      for (var i = 0; i < templates.length; i++) {
+        var spec = templates[i];
+        document.write("<p><strong>Input:</strong></p>");
+        document.write("<p>");
+        document.write("template: \"" + escape(spec.template) + "\"");
+        document.write("<br>");
+        document.write("variables: " + spec.variables.toSource().slice(1, -1));
+        document.write("</p>");
+        document.write("<p><strong>Output:</strong></p>");
+        document.write(templayed(spec.template, spec.variables));
+      }
     </script>
   </body>
 </html>
