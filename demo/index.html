@@ -13,6 +13,18 @@
           variables: {name: "Paul Engel"}
         },
         {
+          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}<p>",
+          variables: {}
+        },
+        {
+          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}<p>",
+          variables: {show: false}
+        },
+        {
+          template: "<p>This is shown!{{#shown}} And, this is also shown{{/shown}}<p>",
+          variables: {shown: true}
+        },
+        {
           template: "<p>My name is {{person.first_name}} {{person.last_name}}!<p>",
           variables: {person: {first_name: "Paul", last_name: "Engel"}}
         },

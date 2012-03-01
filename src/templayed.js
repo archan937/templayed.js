@@ -16,13 +16,13 @@ Templayed = (function() {
   var render = function(template, vars) {
     (vars instanceof Array) || (vars = [vars]);
     return template.replace(/{{(\^|#)(.*?)}}(.*?){{\/\2}}/g, function(match, operator, key, context) {
-      var string = "", array = fetch(key, vars), dup, i;
-      if (operator == "^") {
-        return array.length ? string : render(context, vars);
+      var string = "", entry = fetch(key, vars), dup, i;
+      if (operator == "^" || typeof(entry) == "boolean") {
+        return ((entry instanceof Array) && entry.length) || entry === false ? string : render(context, vars);
       }
-      for (i in array) {
+      for (i in entry) {
         dup = vars.slice();
-        dup.unshift(array[i]);
+        dup.unshift(entry[i]);
         string += render(context, dup);
       }
       return string;
