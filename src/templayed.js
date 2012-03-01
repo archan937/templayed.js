@@ -26,12 +26,15 @@ Templayed = (function() {
         string += render(context, dup);
       }
       return string;
-    }).replace(/{{(!|#)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
+    }).replace(/{{(!|#|&)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
       switch (operator) {
       case "!":
         return "";
       case "#":
         return fetch(context, vars).apply(vars[0]);
+      case "&":
+        return render("{{" + context + "}}", vars).
+               replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
       default:
         return context == "." ? vars[0] : fetch(context, vars);
       }
