@@ -9,31 +9,31 @@
     <script>
       templates = [
         {
-          template: "<p>My name is {{name}}!<p>",
+          template: "<p>My name is {{name}}!</p>",
           variables: {name: "Paul Engel"}
         },
         {
-          template: "<p>My name is {{name}}!{{!name}}<p>",
+          template: "<p>My name is {{name}}!{{!name}}</p>",
           variables: {name: "Paul Engel"}
         },
         {
-          template: "<p>{{html}} {{&html}}<p>",
+          template: "<p>{{html}} {{&html}}</p>",
           variables: {html: "<strong>Paul Engel</strong>"}
         },
         {
-          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}<p>",
+          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}</p>",
           variables: {}
         },
         {
-          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}<p>",
+          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}</p>",
           variables: {show: false}
         },
         {
-          template: "<p>This is shown!{{#shown}} And, this is also shown{{/shown}}<p>",
+          template: "<p>This is shown!{{#shown}} And, this is also shown{{/shown}}</p>",
           variables: {shown: true}
         },
         {
-          template: "<p>My name is {{person.first_name}} {{person.last_name}}!<p>",
+          template: "<p>My name is {{person.first_name}} {{person.last_name}}!</p>",
           variables: {person: {first_name: "Paul", last_name: "Engel"}}
         },
         {
