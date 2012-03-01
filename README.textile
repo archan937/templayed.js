@@ -4,7 +4,33 @@ A micro (Mustache syntax-like) Javascript templating library
 
 h2. Introduction
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+"Mustache.js":https://github.com/janl/mustache.js/ is one of the best known Javascript templating libraries out there. I am also using it within several projects. The only downside you could imagine is its size:
+
+* uncompressed: 15050 bytes
+* YUI compressed: 5053 bytes
+* YUI compressed and gzipped: 2271 bytes
+
+So out of pure curiosity, I have written @templayed.js@ to see whether it can be written more compact with the following as result:
+
+* uncompressed: 1931 bytes
+* YUI compressed: 896 bytes
+* YUI compressed and gzipped: 528 bytes
+
+It does not have dependencies and it supports the following Mustache.js features:
+
+* variables
+* variables accessed through properties of objects using the dot notation
+* HTML escaping of variables
+* shown / hidden sections
+* lists
+* current item referrals
+* functions
+* inverted sections
+* comments
+
+This leaves out partials and streaming.
+
+So without the intention of seeing @templayed.js@ as a serious replacement of @Mustache.js@, I have published the library on my Github account.
 
 h2. Installation
 
@@ -18,7 +44,23 @@ Just include templayed.js:
 
 h2. Usage
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+h3. Writing templates
+
+If you are familiar with the @Mustache.js@ syntax then you are able to write @templayed.js@ templates. Read the "Mustache.js documentation":https://github.com/janl/mustache.js/ if you are not.
+
+h3. Rendering templates
+
+Rendering those templates can be done using @Templayed.render()@ or @templayed()@.
+
+<pre>
+  Templayed.render("<p>My name is {{name}}!</p>", {name: "Paul Engel"});
+  // or
+  templayed("<p>My name is {{name}}!</p>", {name: "Paul Engel"});
+</pre>
+
+h2. Last remarks
+
+Please check out "demo/index.html":https://github.com/archan937/templayed.js/blob/master/demo/index.html for a working demo.
 
 h2. Contact me
 
