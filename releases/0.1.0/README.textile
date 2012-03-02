@@ -1,6 +1,6 @@
 h1. templayed.js
 
-A micro (Mustache syntax-like) Javascript templating library
+A micro (Mustache.js compliant) Javascript templating library
 
 h2. Introduction
 
@@ -12,9 +12,9 @@ h2. Introduction
 
 So out of pure curiosity, I have written @templayed.js@ to see whether it can be written more compact with the following as result:
 
-* uncompressed: 1931 bytes
-* YUI compressed: 896 bytes
-* YUI compressed and gzipped: 528 bytes
+* uncompressed: 1751 bytes
+* YUI compressed: 827 bytes
+* YUI compressed and gzipped: 490 bytes
 
 It does not have dependencies and it supports the following Mustache.js features:
 
@@ -50,12 +50,18 @@ If you are familiar with the @Mustache.js@ syntax then you are able to write @te
 
 h3. Rendering templates
 
-Rendering those templates can be done using @Templayed.render()@ or @templayed()@.
+Rendering those templates can be done using @templayed()@.
 
 <pre>
-  Templayed.render("<p>My name is {{name}}!</p>", {name: "Paul Engel"});
-  // or
   templayed("<p>My name is {{name}}!</p>", {name: "Paul Engel"});
+</pre>
+
+h3. Check current version
+
+You can obtain the library version with the following:
+
+<pre>
+  templayed.version;
 </pre>
 
 h2. Last remarks

@@ -1,47 +1,20 @@
-if (typeof(Templayed) == "undefined") {
+if (typeof(templayed) == "undefined") {
 
 // *
 // * templayed.js 0.1.0 (Uncompressed)
-// * A micro (Mustache syntax-like) Javascript templating library
+// * A micro (Mustache.js compliant) Javascript templating library
 // *
 // * (c) 2012 Paul Engel (Internetbureau Holder B.V.)
 // * Except otherwise noted, templayed.js is licensed under
 // * http://creativecommons.org/licenses/by-sa/3.0
 // *
-// * $Date: 2012-03-02 00:48:55 +0100 (Fri, 02 March 2012) $
+// * $Date: 2012-03-03 00:14:55 +0100 (Sat, 03 March 2012) $
 // *
 
-Templayed = (function() {
+templayed = function(template, vars) {
+  (vars instanceof Array) || (vars = [vars]);
 
-  var render = function(template, vars) {
-    (vars instanceof Array) || (vars = [vars]);
-    return template.replace(/{{(\^|#)(.*?)}}(.*?){{\/\2}}/g, function(match, operator, key, context) {
-      var string = "", entry = fetch(key, vars), dup, i;
-      if (operator == "^" || typeof(entry) == "boolean") {
-        return ((entry instanceof Array) && entry.length) || entry === false ? string : render(context, vars);
-      }
-      for (i in entry) {
-        dup = vars.slice();
-        dup.unshift(entry[i]);
-        string += render(context, dup);
-      }
-      return string;
-    }).replace(/{{(!|#|&)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
-      switch (operator) {
-      case "!":
-        return "";
-      case "#":
-        return fetch(context, vars).apply(vars[0]);
-      case "&":
-        return render("{{" + context + "}}", vars).
-               replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-      default:
-        return context == "." ? vars[0] : fetch(context, vars);
-      }
-    });
-  },
-
-  fetch = function(path, vars) {
+  var fetch = function(path, vars) {
     if (path.match(/\./)) {
       var keys = path.split(".");
       return fetch(keys.slice(1).join("."), [fetch(keys[0], vars)]);
@@ -50,15 +23,33 @@ Templayed = (function() {
     }
   };
 
-  return {
-    version: "0.1.0",
-    render: render
-  };
+  return template.replace(/{{(\^|#)(.*?)}}(.*?){{\/\2}}/g, function(match, operator, key, context) {
+    var string = "", entry = fetch(key, vars), dup, i;
+    if (operator == "^" || typeof(entry) == "boolean") {
+      return ((entry instanceof Array) && entry.length) || entry === false ? string : templayed(context, vars);
+    }
+    for (i in entry) {
+      dup = vars.slice();
+      dup.unshift(entry[i]);
+      string += templayed(context, dup);
+    }
+    return string;
+  }).replace(/{{(!|#|&)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
+    switch (operator) {
+    case "!":
+      return "";
+    case "#":
+      return fetch(context, vars).apply(vars[0]);
+    case "&":
+      return templayed("{{" + context + "}}", vars).
+             replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    default:
+      return context == "." ? vars[0] : fetch(context, vars);
+    }
+  });
 
-}());
-
-templayed = function() {
-  return Templayed.render.apply(null, arguments);
 };
+
+templayed.version = "0.1.0";
 
 }
