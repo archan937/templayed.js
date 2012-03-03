@@ -6,80 +6,101 @@
       archan937@github: /templayed.js - demo
     </title>
     <script src="../src/templayed.js" type="text/javascript"></script>
-    <script>
-      templates = [
-        {
-          template: "<p>My name is {{name}}!</p>",
-          variables: {name: "Paul Engel"}
-        },
-        {
-          template: "<p>My name is {{name}}!{{!name}}</p>",
-          variables: {name: "Paul Engel"}
-        },
-        {
-          template: "<p>{{html}} {{&html}}</p>",
-          variables: {html: "<strong>Paul Engel</strong>"}
-        },
-        {
-          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}</p>",
-          variables: {}
-        },
-        {
-          template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}</p>",
-          variables: {show: false}
-        },
-        {
-          template: "<p>This is shown!{{#shown}} And, this is also shown{{/shown}}</p>",
-          variables: {shown: true}
-        },
-        {
-          template: "<p>My name is {{person.first_name}} {{person.last_name}}!</p>",
-          variables: {person: {first_name: "Paul", last_name: "Engel"}}
-        },
-        {
-          template: "{{name}}<ul>{{#names}}<li>{{name}}</li>{{/names}}</ul>{{^names}}Sorry, no people to list!{{/names}}",
-          variables: {names: []}
-        },
-        {
-          template: "<p>{{name}}</p><ul>{{#names}}<li>{{name}}</li>{{/names}}</ul>{{^names}}Sorry, no people to list!{{/names}}<p>{{name}}</p>",
-          variables: {name: "Chunk Norris", names: [{name: "Paul"}, {name: "Engel"}]}
-        },
-        {
-          template: "<ul>{{#names}}<li>{{.}}{{foo}}</li>{{/names}}</ul>",
-          variables: {names: ["Paul", "Engel"]}
-        },
-        {
-          template: "<ul>{{#names}}<li>{{#fullName}}</li>{{/names}}</ul>",
-          variables: {
-            names: [{firstName: "Paul", lastName: "Engel"}, {firstName: "Chunk", lastName: "Norris"}],
-            fullName: function() {
-              return this.lastName + ", " + this.firstName;
-            }
-          }
-        }
-      ];
-      escape = function(html) {
-        return html.replace(/&/g,'&amp;').
-                    replace(/>/g,'&gt;').
-                    replace(/</g,'&lt;').
-                    replace(/"/g,'&quot;')
-      };
-    </script>
+    <script src="assets/utils.js" type="text/javascript"></script>
+    <script src="assets/templates.js" type="text/javascript"></script>
+    <link href="assets/bootstrap.css" rel="stylesheet"/>
+    <link href="assets/bootstrap-responsive.css" rel="stylesheet"/>
+    <link href="assets/docs.css" rel="stylesheet"/>
+    <link href="assets/prettify.css" rel="stylesheet"/>
   </head>
   <body>
-    <h2>Demo page of templayed.js</h2>
-    <script>
-      for (var i = 0; i < templates.length; i++) {
-        var spec = templates[i];
-        document.write("<p><strong>Input:</strong></p>");
-        document.write("<p>");
-        document.write("template: \"" + escape(spec.template) + "\"");
-        document.write("<br>");
-        document.write("variables: " + spec.variables.toSource().slice(1, -1));
-        document.write("</p>");
-        document.write("<p><strong>Output:</strong></p>");
-        document.write(templayed(spec.template, spec.variables));
-      }
-    </script>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="http://twitter.com/archan937">@archan937</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="http://archan937.github.com/templayed.js">Demo page</a>
+              </li>
+              <li class="">
+                <a href="http://twitter.com/archan937">@archan937</a>
+              </li>
+              <li class="">
+                <a href="http://github.com/archan937">@github</a>
+              </li>
+              <li class="">
+                <a href="mailto:paul.engel@holder.nl">@holder.nl</a>
+              </li>
+              <li class="">
+                <a href="http://holder.nl">http://holder.nl</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="width: 900px">
+      <header class="jumbotron masthead">
+        <div class="inner">
+          <h1 style="font-size: 75px">templayed.js</h1>
+          <p>A micro (Mustache.js compliant) Javascript templating library</p>
+          <p class="download-info">
+            <a href="https://github.com/archan937/templayed.js/" class="btn btn-primary btn-large">View project on GitHub</a>
+            <a href="http://github.com/archan937/templayed.js/zipball/master" class="btn btn-large">Download templayed.js</a>
+          </p>
+        </div>
+      </header>
+    </div>
+    <div class="container" style="width: 700px">
+      <hr>
+      <div class="marketing">
+        <h1>Try out templayed.js online yourself!</h1>
+        <p class="marketing-byline">Or check out a couple of live examples further below</p>
+      </div>
+      <p>
+        <form class="form-horizontal" onsubmit="return renderTemplate()" onreset="resetOutput()">
+          <br><br>
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label" for="template">Template</label>
+              <div class="controls">
+                <textarea type="text" class="input-xlarge" id="template" name="template" style="width: 440px; height: 80px">Hi, {{name}}! Try out {{library}} yourself now.</textarea>
+                <p class="help-block">Write the (<a href="https://github.com/janl/mustache.js/">Mustache.js</a> compliant) template to render</p>
+              </div>
+              <br>
+              <label class="control-label" for="variables">Variables</label>
+              <div class="controls">
+                <textarea type="text" class="input-xlarge" id="variables" name="variables" style="width: 440px; height: 80px">{name: "stranger", library: "templayed.js"}</textarea>
+                <p class="help-block">Fill in the variables available for rendering in Javascript</p>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Render template</button>
+            <button class="btn" type="reset">Reset</button>
+          </div>
+        </form>
+      </p>
+      <div style="padding: 46px 0 52px 0; color: #999; font-size: 19px; font-weight: 300; line-height: 24px; text-align: center">
+        <span id="hint">Click on "Render template" to see the output here ...</span>
+        <div id="output" style="color: black"></div>
+      </div>
+      <script>
+        for (var i = 0; i < templates.length; i++) {
+          write(templates[i]);
+        }
+      </script>
+      <footer class="footer">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>The Javascript library <a href="https://github.com/archan937/templayed.js" target="_blank">templayed.js</a> is written by <a href="http://twitter.com/archan937" target="_blank">@archan937</a> of <a href="http://holder.nl" target="_blank">Internetbureau Holder B.V.</a></p>
+        <p>Designed and built with all the love in the world <a href="http://twitter.com/twitter" target="_blank">@twitter</a> by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
+      </footer>
+    </div>
   </body>
 </html>
