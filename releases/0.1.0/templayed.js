@@ -8,7 +8,7 @@ if (typeof(templayed) == "undefined") {
 // * Except otherwise noted, templayed.js is licensed under
 // * http://creativecommons.org/licenses/by-sa/3.0
 // *
-// * $Date: 2012-03-03 00:14:55 +0100 (Sat, 03 March 2012) $
+// * $Date: 2012-03-03 01:41:29 +0100 (Sat, 03 March 2012) $
 // *
 
 templayed = function(template, vars) {

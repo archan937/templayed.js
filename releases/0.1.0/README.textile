@@ -64,9 +64,9 @@ You can obtain the library version with the following:
   templayed.version;
 </pre>
 
-h2. Last remarks
+h2. Try out templayed.js online yourself
 
-Please check out "demo/index.html":https://github.com/archan937/templayed.js/blob/master/demo/index.html for a working demo.
+Please visit "http://archan937.github.com/templayed.js":http://archan937.github.com/templayed.js to try out templayed.js yourself and to check out a series of live examples.
 
 h2. Contact me
 
