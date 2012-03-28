@@ -1,6 +1,6 @@
 h1. templayed.js
 
-A micro (Mustache.js compliant) Javascript templating library
+A micro (Mustache.js compliant) Javascript templating library written in 1771 bytes (uncompressed)
 
 h2. Introduction
 
@@ -12,9 +12,9 @@ h2. Introduction
 
 So out of pure curiosity, I have written @templayed.js@ to see whether it can be written more compact with the following as result:
 
-* uncompressed: 1751 bytes
-* YUI compressed: 827 bytes
-* YUI compressed and gzipped: 490 bytes
+* uncompressed: 1771 bytes
+* YUI compressed: 846 bytes
+* YUI compressed and gzipped: 496 bytes
 
 It does not have dependencies and it supports the following Mustache.js features:
 

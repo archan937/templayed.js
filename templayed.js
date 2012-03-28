@@ -1,14 +1,14 @@
 if (typeof(templayed) == "undefined") {
 
 // *
-// * templayed.js 0.1.0 (Uncompressed)
-// * A micro (Mustache.js compliant) Javascript templating library
+// * templayed.js 0.1.1 (Uncompressed)
+// * A micro (Mustache.js compliant) Javascript templating library written in 1751 bytes (uncompressed)
 // *
 // * (c) 2012 Paul Engel (Internetbureau Holder B.V.)
 // * Except otherwise noted, templayed.js is licensed under
 // * http://creativecommons.org/licenses/by-sa/3.0
 // *
-// * $Date: 2012-03-03 01:41:29 +0100 (Sat, 03 March 2012) $
+// * $Date: 2012-03-28 21:13:11 +0100 (Wed, 28 March 2012) $
 // *
 
 templayed = function(template, vars) {
@@ -23,7 +23,7 @@ templayed = function(template, vars) {
     }
   };
 
-  return template.replace(/{{(\^|#)(.*?)}}(.*?){{\/\2}}/g, function(match, operator, key, context) {
+  return template.replace(/\n/g, " ").replace(/{{(\^|#)(.*?)}}(.*?){{\/\2}}/g, function(match, operator, key, context) {
     var string = "", entry = fetch(key, vars), dup, i;
     if (operator == "^" || typeof(entry) == "boolean") {
       return ((entry instanceof Array) && entry.length) || entry === false ? string : templayed(context, vars);
@@ -50,6 +50,6 @@ templayed = function(template, vars) {
 
 };
 
-templayed.version = "0.1.0";
+templayed.version = "0.1.1";
 
 }
