@@ -1,6 +1,6 @@
 h1. templayed.js
 
-A micro (Mustache.js compliant) Javascript templating library
+A micro (Mustache.js compliant) Javascript templating library written in 1751 bytes (uncompressed)
 
 h2. Introduction
 

@@ -1,9 +1,5 @@
 = templayed.js CHANGELOG
 
-== Version 0.1.1 (March 28, 2012)
-
-* Tackling new lines within templates
-
 == Version 0.1.0 (March 3, 2012)
 
 * Initial release

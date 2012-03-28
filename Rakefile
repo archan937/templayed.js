@@ -30,6 +30,7 @@ task :release, :version do |task, args|
 
   # Create files
   FileUtils.cp("README.textile", "#{release_dir}/README.textile")
+  FileUtils.cp("CHANGELOG.rdoc", "#{release_dir}/CHANGELOG.rdoc")
   FileUtils.cp_r("demo", "#{release_dir}/")
   File.open("#{release_dir}/templayed.js", "w").puts(javascript)
   File.open("VERSION", "w").puts(args[:version])
