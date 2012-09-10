@@ -1,6 +1,6 @@
 h1. templayed.js
 
-A micro (Mustache.js compliant) Javascript templating library written in 1771 bytes (uncompressed)
+A micro (Mustache compliant) Javascript templating library written in 1771 bytes (uncompressed)
 
 h2. Introduction
 
@@ -31,6 +31,12 @@ It does not have dependencies and it supports the following Mustache.js features
 This leaves out partials and streaming.
 
 So without the intention of seeing @templayed.js@ as a serious replacement of @Mustache.js@, I have published the library on my Github account.
+
+h2. Benchmarks with Mustache.js and Handlebars.js
+
+"Handlebars.js":http://handlebarsjs.com/ is also a well-known Mustache compliant Javascript templating library (uncompressed 49699 bytes) written by Yehuda Katz ("@wycats":https://github.com/wycats) and it is a bit more extensive than Mustache.js.
+
+I have benchmarked Mustache.js, Handlebars.js and templayed.js (*without* template caching). You can view the results at "http://jsperf.com/mustache-compliant-libraries":http://jsperf.com/mustache-compliant-libraries in which templayed.js is pointed out as the fastest library overall at the moment.
 
 h2. Installation
 
