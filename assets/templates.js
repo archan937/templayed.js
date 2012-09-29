@@ -12,6 +12,10 @@ var templates = [
     variables: {html: "<strong>Paul Engel</strong>"}
   },
   {
+    template: "<p>{{html}} {{{html}}}</p>",
+    variables: {html: "<strong>Paul Engel</strong>"}
+  },
+  {
     template: "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}</p>",
     variables: {}
   },

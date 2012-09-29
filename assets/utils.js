@@ -59,9 +59,13 @@ function write(spec) {
   document.write("variables: " + escape(inspect(spec.variables)));
   document.write("</dd>");
   document.write("<br>");
+  document.write("<dt>Compiled to:</dt>");
+  document.write("<dd>");
+  document.write(escape(inspect(templayed(spec.template))));
+  document.write("<br><br>");
   document.write("<dt>Output:</dt>");
   document.write("<dd>");
-  document.write(templayed(spec.template, spec.variables));
+  document.write(templayed(spec.template)(spec.variables));
   document.write("</dd>");
   document.write("</dl>");
 };

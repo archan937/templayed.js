@@ -12,9 +12,9 @@ h2. Introduction
 
 So out of pure curiosity, I have written @templayed.js@ to see whether it can be written more compact with the following as result:
 
-* uncompressed: 1771 bytes
-* YUI compressed: 846 bytes
-* YUI compressed and gzipped: 496 bytes
+* uncompressed: 2229 bytes
+* YUI compressed: 1434 bytes
+* YUI compressed and gzipped: 678 bytes
 
 It does not have dependencies and it supports the following Mustache.js features:
 
@@ -30,13 +30,15 @@ It does not have dependencies and it supports the following Mustache.js features
 
 This leaves out partials and streaming.
 
-So without the intention of seeing @templayed.js@ as a serious replacement of @Mustache.js@, I have published the library on my Github account.
+h2. Benchmarks with Mustache.js, Handlebars.js and Hogan.js
 
-h2. Benchmarks with Mustache.js and Handlebars.js
+"Handlebars.js":http://handlebarsjs.com/ is also a well-known Mustache compliant Javascript templating library (uncompressed 49699 bytes) written by Yehuda Katz ("@wycats":https://github.com/wycats) and it is a bit more extensive than Mustache.js. "Hogan.js":http://twitter.github.com/hogan.js is the 2.5k Mustache templating library developed by Twitter.
 
-"Handlebars.js":http://handlebarsjs.com/ is also a well-known Mustache compliant Javascript templating library (uncompressed 49699 bytes) written by Yehuda Katz ("@wycats":https://github.com/wycats) and it is a bit more extensive than Mustache.js.
+As of version @0.2.0@, templayed.js compiles templates to cached functions for major performance improvements.
 
-I have benchmarked Mustache.js, Handlebars.js and templayed.js (*without* template caching). You can view the results at "http://jsperf.com/mustache-compliant-libraries":http://jsperf.com/mustache-compliant-libraries in which templayed.js is pointed out as the fastest library overall at the moment.
+I have benchmarked Mustache.js, Handlebars.js, Hogan.js and templayed.js.
+
+You can view the results at "http://jsperf.com/mustache-compliant-libraries":http://jsperf.com/mustache-compliant-libraries in which *templayed.js is pointed out as the fastest library in all browsers*!
 
 h2. Installation
 
@@ -59,7 +61,7 @@ h3. Rendering templates
 Rendering those templates can be done using @templayed()@.
 
 <pre>
-  templayed("<p>My name is {{name}}!</p>", {name: "Paul Engel"});
+  templayed("<p>My name is {{name}}!</p>")({name: "Paul Engel"});
 </pre>
 
 h3. Check current version
@@ -69,6 +71,10 @@ You can obtain the library version with the following:
 <pre>
   templayed.version;
 </pre>
+
+h2. Testing templayed.js with QUnit
+
+The @templayed.js@ library is tested with "QUnit":http://qunitjs.com. Check out the test results at "http://archan937.github.com/templayed.js/test":http://archan937.github.com/templayed.js/test.
 
 h2. Try out templayed.js online yourself
 
