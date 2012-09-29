@@ -2,56 +2,43 @@ if (typeof(templayed) == "undefined") {
 
 // *
 // * templayed.js 0.2.0 (Uncompressed)
-// * A micro (Mustache.js compliant) Javascript templating library written in 1751 bytes (uncompressed)
+// * The fastest and smallest Mustache compliant Javascript templating library written in 1733 bytes (uncompressed)
 // *
 // * (c) 2012 Paul Engel (Internetbureau Holder B.V.)
 // * Except otherwise noted, templayed.js is licensed under
 // * http://creativecommons.org/licenses/by-sa/3.0
 // *
-// * $Date: 2012-09-29 13:02:26 +0100 (Sat, 29 September 2012) $
+// * $Date: 2012-10-08 01:50:27 +0100 (Mon, 08 October 2012) $
 // *
 
 templayed = function(template, vars) {
-  (vars instanceof Array) || (vars = [vars]);
 
-  var fetch = function(path, vars) {
-    if (path.match(/\./)) {
-      var keys = path.split(".");
-      return fetch(keys.slice(1).join("."), [fetch(keys[0], vars)]);
-    } else {
-      return ((vars instanceof Array) ? vars[0] : vars)[path] || "";
-    }
-  }, compile = function(template, vars) {
-    vars || (vars = "vars");
-    return '"' + template.replace(/{{(!|#|&|{)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
-      var parse = context == "." ? vars + "[0]" : 'fetch(' + JSON.stringify(context) + ', ' + vars + ')';
-      switch (operator) {
-      case "!":
-        return '';
-      case "#":
-        return '" + fetch(' + JSON.stringify(context) + ', vars).apply(' + vars + '[0]) + "';
-      case "&": case "{":
-        return '" + ' + parse + '.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") + "';
-      default:
-        return '" + ' + parse + ' + "';
-      }
-    }) + '"';
-  };
-
-  return eval('(function(vars) { return ' +
-    compile(template.replace(/\"/g, '\\"').replace(/\n/g, '\\n').replace(/{{(\^|#)(.*?)}}(.*?){{\/\2}}/g, function(match, operator, key, context) {
-      return ['" + (function() {',
-        'var o = fetch(' + JSON.stringify(key) + ', vars);',
+  var get = function(path, i) {
+    i = 1; path = path.replace(/\.\.\//g, function() { i++; return ''; });
+    var js = ['vars[vars.length - ', i, ']'], keys = (path == "." ? [] : path.split(".")), j = 0;
+    for (j; j < keys.length; j++) { js.push('.' + keys[j]); };
+    return js.join('');
+  }, tag = function(template) {
+    return template.replace(/\{\{(!|&|\{)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
+      if (operator == "!") return '';
+      var i = inc++;
+      return ['"; var o', i, ' = ', get(context), '; s += ((typeof(o', i, ') == "function" ? o', i, '.call(vars[vars.length - 1]) : o', i, ') || "")',
+        (!operator ? '' : '.replace(/&/g,"&amp;").replace(/>/g,"&gt;").replace(/</g,"&lt;").replace(/"/g,"&quot;")'), ' + "'
+      ].join('');
+    });
+  }, block = function(template) {
+    return tag(template.replace(/\{\{(\^|#)(.*?)}}(.*?)\{\{\/\2}}/g, function(match, operator, key, context) {
+      var i = inc++;
+      return ['"; var o', i, ' = ', get(key), '; ',
         (operator == "^" ?
-        'return (((o instanceof Array) && o.length) || o === false) ? "" : ' + compile(context) + ';' : (
-       ['if (typeof(o) == "boolean") {',
-          'return (o === false ? "" : ' + compile(context) + ');',
-        '} else {',
-          'var s = "", i; for (i in o) { s += ' + compile(context, "[o[i]]") + '; }; return s;',
-        '}'].join(" "))), '})() + "'
-       ].join(" ");
-    })
-  ) + '; })');
+          ['if (!(((o', i, ' instanceof Array) && o', i, '.length) || !o', i, ')) { s += "', block(context), '"; } '] :
+          ['if (typeof(o', i, ') == "boolean" && o', i, ') { s += "', block(context), '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o',
+            i, '.length; i', i, '++) { vars.push(o', i, '[i', i, ']); s += "', block(context), '"; vars.pop(); }}']
+        ).join(''), '; s += "'].join('');
+    }));
+  }, inc = 0;
+
+  return new Function("vars", 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/\n/g, '\\n')) + '"; return s;');
 };
 
 templayed.version = "0.2.0";

@@ -44,12 +44,39 @@ var templates = [
     variables: {names: ["Paul", "Engel"]}
   },
   {
-    template: "<ul>{{#names}}<li>{{#fullName}}</li>{{/names}}</ul>",
+    template: "<ul>{{#names}}<li>{{../fullName}}</li>{{/names}}</ul>",
     variables: {
       names: [{firstName: "Paul", lastName: "Engel"}, {firstName: "Chunk", lastName: "Norris"}],
       fullName: function() {
         return this.lastName + ", " + this.firstName;
       }
+    }
+  },
+  {
+    template: [
+      "<h3>{{header}}</h3>",
+      "{{#bug}}",
+      "{{/bug}}",
+      "{{#items}}",
+        "{{#first}}",
+          "<li><strong>{{name}}</strong></li>",
+        "{{/first}}",
+        "{{#link}}",
+          "<li><a href=\"{{url}}\">{{name}}</a></li>",
+        "{{/link}}",
+      "{{/items}}",
+      "{{#empty}}",
+        "<p>The list is empty.</p>",
+      "{{/empty}}"
+    ].join(""),
+    variables: {
+      header: "Colors",
+      items: [
+        {"name": "red", "first": true, "url": "#Red"},
+        {"name": "green", "link": true, "url": "#Green"},
+        {"name": "blue", "link": true, "url": "#Blue"}
+      ],
+      empty: false
     }
   }
 ];

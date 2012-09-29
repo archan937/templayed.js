@@ -1,7 +1,7 @@
 function renderTemplate() {
   document.getElementById("hint").setAttribute("style", "display: none");
   try {
-    document.getElementById("output").innerHTML = templayed(document.getElementById("template").value, eval("(" + document.getElementById("variables").value + ")"));
+    document.getElementById("output").innerHTML = templayed(document.getElementById("template").value)(eval("(" + document.getElementById("variables").value + ")"));
   } catch(e) {
     alert(e);
   }
@@ -18,7 +18,7 @@ function inspect(object) {
   case "undefined":
     return "undefined";
   case "string":
-    return "\"" + object + "\"";
+    return "\"" + object.replace(/\n/g, "\\n").replace(/\"/g, "\\\"") + "\"";
   case "object":
     if (object == null) {
       return "null";
@@ -43,10 +43,10 @@ function inspect(object) {
 };
 
 function escape(html) {
-  return html.replace(/&/g,'&amp;').
-              replace(/>/g,'&gt;').
-              replace(/</g,'&lt;').
-              replace(/"/g,'&quot;')
+  return html.replace(/&/g, "&amp;").
+              replace(/>/g, "&gt;").
+              replace(/</g, "&lt;").
+              replace(/"/g, "&quot;")
 };
 
 function write(spec) {
@@ -61,7 +61,7 @@ function write(spec) {
   document.write("<br>");
   document.write("<dt>Compiled to:</dt>");
   document.write("<dd>");
-  document.write(escape(inspect(templayed(spec.template))));
+  document.write(escape(inspect(templayed(spec.template)).replace(/^function anonymous/, "function")));
   document.write("<br><br>");
   document.write("<dt>Output:</dt>");
   document.write("<dd>");
