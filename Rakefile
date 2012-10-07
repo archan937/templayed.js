@@ -32,6 +32,7 @@ task :release, :version do |task, args|
   FileUtils.cp("README.textile", "#{release_dir}/README.textile")
   FileUtils.cp("CHANGELOG.rdoc", "#{release_dir}/CHANGELOG.rdoc")
   FileUtils.cp_r("demo", "#{release_dir}/")
+  FileUtils.cp_r("test", "#{release_dir}/")
   File.open("#{release_dir}/templayed.js", "w").puts(javascript)
   File.open("VERSION", "w").puts(args[:version])
 
@@ -41,6 +42,13 @@ task :release, :version do |task, args|
                    .gsub("src/templayed.js", "templayed.js")
                    .gsub("templayed.js</h1>", "templayed.js<small> v#{args[:version]}</small></h1>")
   File.open("#{release_dir}/demo/index.html", "w").puts(javascript)
+
+  # Correct test/index.html
+  javascript = File.open("#{release_dir}/test/index.html")
+                   .read
+                   .gsub("src/templayed.js", "templayed.js")
+                   .gsub("templayed.js</h1>", "templayed.js<small> v#{args[:version]}</small></h1>")
+  File.open("#{release_dir}/test/index.html", "w").puts(javascript)
 
   # Compress release using YUI compressor
   IO.popen "java -jar lib/yuicompressor-2.4.2.jar -v #{release_dir}/templayed.js -o #{release_dir}/templayed.min.js"
