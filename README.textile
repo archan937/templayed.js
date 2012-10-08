@@ -40,7 +40,7 @@ You can view the results at "Mustache JS engine rumble: Mustache.js vs Handlebar
 
 Open the "benchmark link":http://jsperf.com/mustache-compliant-libraries/7 so you can run the benchmark in your browser yourself.
 
-!http://archan937.github.com/templayed.js/assets/jsperf-benchmarks.png!
+!https://raw.github.com/archan937/templayed.js/master/demo/assets/jsperf-benchmarks.png!
 
 h2. Testing templayed.js with QUnit
 
