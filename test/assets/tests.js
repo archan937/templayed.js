@@ -213,4 +213,93 @@ var inspect = function(object) {
     equal(templayed(template)(variables).replace(/\>\s+\</g, ">\n<").replace(/(^\s+|\s+$)/, ""), expected, inspect(template) + ", " + inspect(variables));
   });
 
+  test("If block helper", function() {
+    var template  = "{{#if lastName}}<h1>{{firstName}} {{lastName}}</h1>{{/if}}",
+        variables = {},
+        expected  = "";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "{{#if lastName}}<h1>{{firstName}} {{lastName}}</h1>{{/if}}",
+    variables = {firstName: "Paul", lastName: "Engel"},
+    expected  = "<h1>Paul Engel</h1>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+  });
+
+  test("If else block helper", function() {
+    var template  = "{{#if lastName}}<h1>{{firstName}} {{lastName}}</h1>{{else}}<h1>Unknown Author</h1>{{/if}}",
+        variables = {},
+        expected  = "<h1>Unknown Author</h1>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "{{#if lastName}}<h1>{{firstName}} {{lastName}}</h1>{{else}}<h1>Unknown Author</h1>{{/if}}",
+    variables = {firstName: "Paul", lastName: "Engel"},
+    expected  = "<h1>Paul Engel</h1>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+  });
+
+  test("Unless block helper", function() {
+    var template  = "{{#unless lastName}}<h1>Unknown Author</h1>{{/unless}}",
+        variables = {},
+        expected  = "<h1>Unknown Author</h1>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "{{#unless lastName}}<h1>Unknown Author</h1>{{/unless}}",
+    variables = {firstName: "Paul", lastName: "Engel"},
+    expected  = "";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+  });
+
+  test("Unless else block helper", function() {
+    var template  = "{{#unless lastName}}<h1>Unknown Author</h1>{{else}}<h1>{{firstName}} {{lastName}}</h1>{{/unless}}",
+        variables = {},
+        expected  = "<h1>Unknown Author</h1>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "{{#unless lastName}}<h1>Unknown Author</h1>{{else}}<h1>{{firstName}} {{lastName}}</h1>{{/unless}}",
+    variables = {firstName: "Paul", lastName: "Engel"},
+    expected  = "<h1>Paul Engel</h1>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+  });
+
+  test("Custom tag helpers", function() {
+    templayed.helper("fullName", function() {
+      return this.lastName + ", " + this.firstName;
+    });
+
+    var template  = "<ul>{{#names}}<li>{{fullName}}</li>{{/names}}</ul>",
+        variables = {names: [{firstName: "Paul", lastName: "Engel"}, {firstName: "Chunk", lastName: "Norris"}]},
+        expected  = "<ul><li>Engel, Paul</li><li>Norris, Chunk</li></ul>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "<ul>{{#names}}<li>{{&fullName}}}</li>{{/names}}</ul>",
+    variables = {names: [{firstName: "Paul", lastName: "> Engel"}, {firstName: "Chunk", lastName: "> Norris"}]},
+    expected  = "<ul><li>&gt; Engel, Paul</li><li>&gt; Norris, Chunk</li></ul>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "<ul>{{#names}}<li>{{{fullName}}}</li>{{/names}}</ul>",
+    variables = {names: [{firstName: "Paul", lastName: "> Engel"}, {firstName: "Chunk", lastName: "> Norris"}]},
+    expected  = "<ul><li>&gt; Engel, Paul</li><li>&gt; Norris, Chunk</li></ul>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+  });
+
+  test("Custom block helpers", function() {
+    templayed.helper("ifTrue", function(boolean) { return boolean; });
+    templayed.helper("ifEquals", function(a, b) { return a == b; });
+
+    var template  = "{{#items}}{{#ifTrue bool}}{{string}}!{{/ifTrue}}{{/items}}",
+        variables = {items: [{bool: true, string: "yes"}, {bool: false, string: "no"}]},
+        expected  = "yes!";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "{{#items}}{{#ifEquals \"a\" key}}{{string}} {{/ifEquals}}{{/items}}",
+    variables = {items: [{key: "a", string: "Hello"}, {key: "b", string: "Goodbye"}, {key: "a", string: "world!"}]},
+    expected  = "Hello world! ";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "{{#items}}{{#ifEquals \"a\" key}}{{string}} {{else}}(Sorry, {{{name}}}!) {{/ifEquals}}{{/items}}",
+    variables = {items: [{key: "a", string: "Hello", name: "Paul"}, {key: "b", string: "Goodbye", name: "> Chuck"}, {key: "a", string: "world!", name: "Engel"}]},
+    expected  = "Hello (Sorry, &gt; Chuck!) world! ";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+  });
+
 })();
