@@ -1,0 +1,14 @@
+{
+  "name": "templayed",
+  "version": "0.2.0",
+  "description": "The fastest and smallest Mustache compliant Javascript templating library",
+  "author": "Paul Engel <http://github.com/archan937>",
+  "keywords": ["mustache", "template", "templates", "ejs"],
+  "main": "./src/templayed.js",
+  "devDependencies": {
+    "mocha": "1.6.x"
+  },
+  "volo": {
+    "url": "https://raw.github.com/archan937/templayed.js/master/src/templayed.js"
+  }
+}

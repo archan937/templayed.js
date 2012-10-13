@@ -1,3 +1,8 @@
+require "json"
+require "erb"
+
+task :default => :test
+
 desc "Release a new templayed.js version"
 task :release, :version do |task, args|
   if (args[:version] || "").strip.empty?
@@ -52,4 +57,81 @@ task :release, :version do |task, args|
 
   # Compress release using YUI compressor
   IO.popen "java -jar lib/yuicompressor-2.4.2.jar -v #{release_dir}/templayed.js -o #{release_dir}/templayed.min.js"
+end
+
+desc "Compile test/mocha_test.js"
+task :compile, :lib do |task, args|
+  lib = args[:lib] || "t"
+  json = Dir["test/spec/*.json"].inject({}) do |json, filename|
+    json.merge! File.basename(filename, ".json").gsub(/^~/, "").capitalize => JSON.parse(File.read(filename))
+  end
+  erb = ERB.new <<-ERB.gsub(/^ {4}/, "")
+    <%=
+      case lib
+      when "m"
+        'var Mustache = require("./ext/mustache.js");'
+      when "hb"
+        'var Handlebars = require("./ext/handlebars.js");'
+      when "h"
+        'var Hogan = require("./ext/hogan.js");'
+      when "b"
+        'var bigote = require("./ext/bigote.js");'
+      when "t"
+        'require("./../src/templayed.js");'
+      end
+    %>
+
+    var assert = require("assert");
+    <% json.keys.each_with_index do |key, index| %>
+    suite(<%= key.inspect %>, function() {
+    <% json[key]["tests"].each do |test| %>
+      test(<%= (test["desc"].gsub(/\\.?$/, "") + " (" + test["name"].downcase + ")").inspect %>, function() {
+        assert.equal(<%= test["expected"].inspect %>, <%=
+          template = test["template"].inspect
+          variables = (test["data"] || {})["lambda"] ? "{lambda:" + test["data"]["lambda"]["js"] + "}" : test["data"].to_json
+          partials = (test["partials"] || {}).to_json
+          case lib
+          when "m"
+            'Mustache.to_html(' + template + ', ' + variables + ', ' + partials + ')'
+          when "hb"
+            'Handlebars.compile(' + template + ')(' + variables + ', ' + partials + ')'
+          when "h"
+            'Hogan.compile(' + template + ').render(' + variables + ', ' + partials + ')'
+          when "b"
+            'bigote.render(bigote.load(' + template + ', ' + variables + ', ' + partials + ')'
+          when "t"
+            'templayed(' + template + ')(' + variables + ', ' + partials + ')'
+          end
+        %>);
+      });
+    <% end %>
+    });<% end %>
+  ERB
+  File.open("test/mocha_test.js", "w") {|f| f.write erb.result(binding) }
+  puts "Compiled #{{"m" => "Mustache.js", "hb" => "Handlebars.js", "h" => "Hogan.js", "b" => "bigote", "t" => "templayed.js"}[args[:lib] || "t"]} tests"
+end
+
+desc "Compile and run mocha tests"
+task :test, :lib do |task, args|
+  exec "rake compile[#{args[:lib]}] && mocha --ui tdd --reporter spec --ignore-leaks"
+end
+
+desc "Compile and run mocha tests with Mustache.js"
+task :m do
+  exec "rake compile[m] && mocha --ui tdd --reporter spec --ignore-leaks"
+end
+
+desc "Compile and run mocha tests with Handlebars.js"
+task :hb do
+  exec "rake compile[hb] && mocha --ui tdd --reporter spec --ignore-leaks"
+end
+
+desc "Compile and run mocha tests with Hogan.js"
+task :h do
+  exec "rake compile[h] && mocha --ui tdd --reporter spec --ignore-leaks"
+end
+
+desc "Compile and run mocha tests with bigote"
+task :b do
+  exec "rake compile[b] && mocha --ui tdd --reporter spec --ignore-leaks"
 end

@@ -27,8 +27,9 @@ It does not have dependencies and it supports the following Mustache.js features
 * functions
 * inverted sections
 * comments
+* partials
 
-This leaves out partials and streaming.
+This leaves out custom delimiters and streaming.
 
 ## Benchmarks with Mustache.js, Handlebars.js and Hogan.js
 
