@@ -74,8 +74,6 @@ task :compile, :lib do |task, args|
         'var Handlebars = require("./ext/handlebars.js");'
       when "h"
         'var Hogan = require("./ext/hogan.js");'
-      when "b"
-        'var bigote = require("./ext/bigote.js");'
       when "t"
         'require("./../src/templayed.js");'
       end
@@ -97,8 +95,6 @@ task :compile, :lib do |task, args|
             'Handlebars.compile(' + template + ')(' + variables + ', ' + partials + ')'
           when "h"
             'Hogan.compile(' + template + ').render(' + variables + ', ' + partials + ')'
-          when "b"
-            'bigote.render(bigote.load(' + template + ', ' + variables + ', ' + partials + ')'
           when "t"
             'templayed(' + template + ')(' + variables + ', ' + partials + ')'
           end
@@ -108,7 +104,7 @@ task :compile, :lib do |task, args|
     });<% end %>
   ERB
   File.open("test/mocha_test.js", "w") {|f| f.write erb.result(binding) }
-  puts "Compiled #{{"m" => "Mustache.js", "hb" => "Handlebars.js", "h" => "Hogan.js", "b" => "bigote", "t" => "templayed.js"}[args[:lib] || "t"]} tests"
+  puts "Compiled #{{"m" => "Mustache.js", "hb" => "Handlebars.js", "h" => "Hogan.js", "t" => "templayed.js"}[args[:lib] || "t"]} tests"
 end
 
 desc "Compile and run mocha tests"
@@ -129,9 +125,4 @@ end
 desc "Compile and run mocha tests with Hogan.js"
 task :h do
   exec "rake compile[h] && mocha --ui tdd --reporter spec --ignore-leaks"
-end
-
-desc "Compile and run mocha tests with bigote"
-task :b do
-  exec "rake compile[b] && mocha --ui tdd --reporter spec --ignore-leaks"
 end
