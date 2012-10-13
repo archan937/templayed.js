@@ -29,7 +29,7 @@ task :release, :version do |task, args|
   FileUtils.mkdir_p(release_dir)
 
   # Create files
-  FileUtils.cp("README.textile", "#{release_dir}/README.textile")
+  FileUtils.cp("README.md", "#{release_dir}/README.md")
   FileUtils.cp("CHANGELOG.rdoc", "#{release_dir}/CHANGELOG.rdoc")
   FileUtils.cp_r("demo", "#{release_dir}/")
   FileUtils.cp_r("test", "#{release_dir}/")
