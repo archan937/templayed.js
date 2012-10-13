@@ -22,8 +22,8 @@ templayed = function(template, vars) {
     return template.replace(/\{\{(!|&|\{)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
       if (operator == "!") return '';
       var i = inc++;
-      return ['"; var o', i, ' = ', get(context), '; s += ((typeof(o', i, ') == "function" ? o', i, '.call(vars[vars.length - 1]) : o', i, ') || "")',
-        (!operator ? '' : '.replace(/&/g,"&amp;").replace(/>/g,"&gt;").replace(/</g,"&lt;").replace(/"/g,"&quot;")'), ' + "'
+      return ['"; var o', i, ' = ', get(context), ', s', i, ' = (((typeof(o', i, ') == "function" ? o', i, '.call(vars[vars.length - 1]) : o', i, ') || "") + ""); s += ',
+        (operator ? ('s' + i) : '(/[&"><]/.test(s' + i + ') ? s' + i + '.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/>/g,"&gt;").replace(/</g,"&lt;") : s' + i + ')'), ' + "'
       ].join('');
     });
   }, block = function(template) {
@@ -31,7 +31,7 @@ templayed = function(template, vars) {
       var i = inc++;
       return ['"; var o', i, ' = ', get(key), '; ',
         (operator == "^" ?
-          ['if (!(((o', i, ' instanceof Array) && o', i, '.length) || !o', i, ')) { s += "', block(context), '"; } '] :
+          ['if ((o', i, ' instanceof Array) ? !o', i, '.length : !o', i, ') { s += "', block(context), '"; } '] :
           ['if (typeof(o', i, ') == "boolean" && o', i, ') { s += "', block(context), '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o',
             i, '.length; i', i, '++) { vars.push(o', i, '[i', i, ']); s += "', block(context), '"; vars.pop(); }}']
         ).join(''), '; s += "'].join('');
