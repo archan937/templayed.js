@@ -50,17 +50,24 @@ var inspect = function(object) {
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
   });
 
+  test("Automatically HTML escape content", function() {
+    var template  = "<p>{{html}}</p>",
+        variables = {html: "<strong>Paul Engel</strong>"},
+        expected  = "<p>&lt;strong&gt;Paul Engel&lt;/strong&gt;</p>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+  });
+
   test("HTML escaping using {{&html}}", function() {
     var template  = "<p>{{html}} {{&html}}</p>",
         variables = {html: "<strong>Paul Engel</strong>"},
-        expected  = "<p><strong>Paul Engel</strong> &lt;strong&gt;Paul Engel&lt;/strong&gt;</p>";
+        expected  = "<p>&lt;strong&gt;Paul Engel&lt;/strong&gt; <strong>Paul Engel</strong></p>";
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
   });
 
   test("HTML escaping using {{{html}}}", function() {
     var template  = "<p>{{html}} {{{html}}}</p>",
         variables = {html: "<strong>Paul Engel</strong>"},
-        expected  = "<p><strong>Paul Engel</strong> &lt;strong&gt;Paul Engel&lt;/strong&gt;</p>";
+        expected  = "<p>&lt;strong&gt;Paul Engel&lt;/strong&gt; <strong>Paul Engel</strong></p>";
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
   });
 
@@ -145,7 +152,7 @@ var inspect = function(object) {
           {category: "Developers", bullet: ">", persons: [{firstName: "Paul", lastName: "Engel"}]},
           {category: "Celebraties", bullet: "<", persons: [{firstName: "Chunk", lastName: "Norris"}]}
         ], fullName: function() { return this.lastName + ", " + this.firstName; }},
-        expected  = "<strong>Developers</strong>> Engel, Paul<strong>Celebraties</strong>< Norris, Chunk";
+        expected  = "<strong>Developers</strong>&gt; Engel, Paul<strong>Celebraties</strong>&lt; Norris, Chunk";
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
 
     template  = "{{#groups}}<strong>{{category}}</strong>{{#persons}}{{{../bullet}}} {{../../fullName}}{{/persons}}{{/groups}}",
@@ -153,7 +160,7 @@ var inspect = function(object) {
       {category: "Developers", bullet: ">", persons: [{firstName: "Paul", lastName: "Engel"}]},
       {category: "Celebraties", bullet: "<", persons: [{firstName: "Chunk", lastName: "Norris"}]}
     ], fullName: function() { return this.lastName + ", " + this.firstName; }},
-    expected  = "<strong>Developers</strong>&gt; Engel, Paul<strong>Celebraties</strong>&lt; Norris, Chunk";
+    expected  = "<strong>Developers</strong>> Engel, Paul<strong>Celebraties</strong>< Norris, Chunk";
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
   });
 
