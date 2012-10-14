@@ -1,6 +1,6 @@
 # templayed.js
 
-The **fastest** and **smallest** Mustache compliant Javascript templating library written in **1733 bytes** (uncompressed)
+The **fastest** and **smallest** Mustache compliant Javascript templating library written in **1806 bytes** (uncompressed)
 
 ## Introduction
 
