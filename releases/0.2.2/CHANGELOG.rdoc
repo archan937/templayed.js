@@ -1,9 +1,5 @@
 = templayed.js CHANGELOG
 
-== Version 0.2.2 (December 4, 2012)
-
-Converted library to be node.js and AMD-compatible in addition to the browser.
-
 == Version 0.2.1 (October 14, 2012)
 
 Corrected HTML escaping behaviour (inverted behaviour: escaping HTML at default instead of when using '{{{' or '{{&')
