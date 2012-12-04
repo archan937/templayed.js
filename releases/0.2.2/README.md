@@ -1,6 +1,6 @@
 # templayed.js
 
-The **fastest** and **smallest** Mustache compliant Javascript templating library written in **2357 bytes** (uncompressed)
+The **fastest** and **smallest** Mustache compliant Javascript templating library written in **1806 bytes** (uncompressed)
 
 ## Introduction
 
@@ -12,9 +12,9 @@ The **fastest** and **smallest** Mustache compliant Javascript templating librar
 
 So out of pure curiosity, I have written `templayed.js` to see whether it can be written more compact with the following as result:
 
-* uncompressed: 2357 bytes
-* YUI compressed: 1431 bytes
-* YUI compressed and gzipped: 713 bytes
+* uncompressed: 1806 bytes
+* YUI compressed: 1281 bytes
+* YUI compressed and gzipped: 643 bytes
 
 It does not have dependencies and it supports the following Mustache.js features:
 
@@ -48,33 +48,11 @@ The `templayed.js` library is tested with [QUnit](http://qunitjs.com). Check out
 
 ## Installation
 
-templayed.js is compatible with node.js, AMD loaders like RequireJS, and native to the browser!
-
-### In the browser
 Just include templayed.js:
 
     <script src="path/to/templayed.js" type="text/javascript"></script>
 
 **Note**: include `templayed.min.js` for the minified templayed.js library
-
-### Using RequireJS ###
-Use like any other AMD module:
-
-    define(['./path/to/templayed'], function(templayed) {
-      // profit!
-    });
-
-### In Node.js ###
-From the command line:
-
-    npm install templayed
-
-Use like any other node module:
-
-    var templayed = require('./path/to/templayed);
-    // even more profit!
-
-**Note**: as of this moment (Dec 2012), there is another fork of templayed acting as the npm module.  While there is no functional difference, it does not contain the AMD/browser-compatible wrapper.
 
 ## Usage
 
