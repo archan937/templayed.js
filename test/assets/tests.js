@@ -176,6 +176,11 @@ var inspect = function(object) {
         variables = {two: 2, three: 3},
         expected  = "1, 2, 3!";
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+    
+    template  = "{{zero}}!",
+    variables = {zero: 0},
+    expected  = "0!";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
   });
 
   test("Quote escaping", function() {
