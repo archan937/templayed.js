@@ -1,0 +1,11 @@
+{
+  "name": "templayed.js",
+  "version": "0.2.1",
+  "ignore": [
+    "**/.*",
+    "components",
+    "test",
+    "demo",
+    "lib"
+  ]
+}
