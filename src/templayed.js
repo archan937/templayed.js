@@ -38,7 +38,7 @@ templayed = function(template, vars) {
     }));
   }, inc = 0;
 
-  return new Function("vars", 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/\n/g, '\\n')) + '"; return s;');
+  return new Function("vars", 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/[\n|\r\n]/g, '\\n')) + '"; return s;');
 };
 
 templayed.version = "{version}";
