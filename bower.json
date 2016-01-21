@@ -1,0 +1,23 @@
+{
+  "name": "templayed.js",
+  "version": "0.2.1",
+  "authors": [
+    "Paul Engel <paul.engel@holder.nl>"
+  ],
+  "description": "The fastest and smallest Mustache compliant Javascript templating library written in 1806 bytes (uncompressed)",
+  "keywords": [
+    "template",
+    "mustache",
+    "handlebars",
+    "hogan",
+    "html"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "components",
+    "test",
+    "demo",
+    "lib"
+  ]
+}
