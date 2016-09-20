@@ -4,9 +4,8 @@ if (typeof(templayed) == "undefined") {
 // * templayed.js 0.2.0 (Uncompressed)
 // * The fastest and smallest Mustache compliant Javascript templating library written in 1733 bytes (uncompressed)
 // *
-// * (c) 2012 Paul Engel (Internetbureau Holder B.V.)
-// * Except otherwise noted, templayed.js is licensed under
-// * http://creativecommons.org/licenses/by-sa/3.0
+// * (c) 2012 Paul Engel
+// * templayed.js is licensed under MIT license
 // *
 // * $Date: 2012-10-08 01:50:27 +0100 (Mon, 08 October 2012) $
 // *

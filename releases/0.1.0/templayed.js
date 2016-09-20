@@ -4,9 +4,8 @@ if (typeof(templayed) == "undefined") {
 // * templayed.js 0.1.0 (Uncompressed)
 // * A micro (Mustache.js compliant) Javascript templating library written in 1751 bytes (uncompressed)
 // *
-// * (c) 2012 Paul Engel (Internetbureau Holder B.V.)
-// * Except otherwise noted, templayed.js is licensed under
-// * http://creativecommons.org/licenses/by-sa/3.0
+// * (c) 2012 Paul Engel
+// * templayed.js is licensed under MIT license
 // *
 // * $Date: 2012-03-03 01:41:29 +0100 (Sat, 03 March 2012) $
 // *

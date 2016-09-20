@@ -114,7 +114,7 @@ For support, remarks and requests, please mail me at [paul.engel@holder.nl](mail
 
 Copyright (c) 2012 Paul Engel, released under the MIT license
 
-[http://holder.nl](http://holder.nl) - [http://github.com/archan937](http://github.com/archan937) - [http://codehero.es](http://codehero.es) - [http://gettopup.com](http://gettopup.com) - [http://twitter.com/archan937](http://twitter.com/archan937) - [paul.engel@holder.nl](mailto:paul.engel@holder.nl)
+[http://gettopup.com](http://gettopup.com) - [http://github.com/archan937](http://github.com/archan937) - [http://twitter.com/archan937](http://twitter.com/archan937) - [pm_engel@icloud.com](mailto:pm_engel@icloud.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
