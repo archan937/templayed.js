@@ -1,13 +1,13 @@
 if (typeof(templayed) == "undefined") {
 
 // *
-// * templayed.js {version} (Uncompressed)
+// * templayed.js 0.2.2 (Uncompressed)
 // * The fastest and smallest Mustache compliant Javascript templating library written in 1806 bytes (uncompressed)
 // *
-// * (c) {year} Paul Engel
+// * (c) 2017 Paul Engel
 // * templayed.js is licensed under MIT license
 // *
-// * $Date: {date} $
+// * $Date: 2017-09-13 20:22:00 +0100 (Wed, 13 September 2017) $
 // *
 
 templayed = function(template, vars) {
@@ -40,6 +40,6 @@ templayed = function(template, vars) {
   return new Function('vars', 's', 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/[\n|\r\n]/g, '\\n')) + '"; return s;');
 };
 
-templayed.version = '{version}';
+templayed.version = '0.2.2';
 
 }
