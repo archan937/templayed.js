@@ -82,8 +82,18 @@ var inspect = function(object) {
     expected  = "<p>This is shown!</p>";
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
 
+    template  = "<p>This is shown!{{#show}} Psst, this is never shown{{/show}}</p>",
+    variables = {show: ''},
+    expected  = "<p>This is shown!</p>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
     template  = "<p>This is shown!{{#show}} And, this is also shown{{/show}}</p>",
     variables = {show: true},
+    expected  = "<p>This is shown! And, this is also shown</p>";
+    equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
+
+    template  = "<p>This is {{show}}!{{#show}} And, this is also {{.}}{{/show}}</p>",
+    variables = {show: 'shown'},
     expected  = "<p>This is shown! And, this is also shown</p>";
     equal(templayed(template)(variables), expected, inspect(template) + ", " + inspect(variables));
   });
