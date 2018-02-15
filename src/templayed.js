@@ -29,6 +29,7 @@ templayed = function(template, vars) {
     return tag(template.replace(/\{\{(\^|#)(.*?)}}(.*?)\{\{\/\2}}/g, function(match, operator, key, context) {
       var i = inc++;
       return ['"; var o', i, ' = ', get(key), '; ',
+        'o', i, ' = (o', i, ' && typeof o', i, ' == "string") ? [o', i, '] : o', i, '; ',
         (operator == "^" ?
           ['if ((o', i, ' instanceof Array) ? !o', i, '.length : !o', i, ') { s += "', block(context), '"; } '] :
           ['if (typeof(o', i, ') == "boolean" && o', i, ') { s += "', block(context), '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o',
