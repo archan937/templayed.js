@@ -15,7 +15,7 @@ templayed = function(template, vars) {
   var get = function(path, i) {
     i = 1; path = path.replace(/\.\.\//g, function() { i++; return ''; });
     var js = ['vars[vars.length - ', i, ']'], keys = (path == "." ? [] : path.split(".")), j = 0;
-    for (j; j < keys.length; j++) { js.push('.' + keys[j]); };
+    for (j; j < keys.length; j++) { js.push('["' + keys[j] + '"]'); };
     return js.join('');
   }, tag = function(template) {
     return template.replace(/\{\{(!|&|\{)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
