@@ -31,7 +31,7 @@ templayed = function(template, vars) {
       return ['"; var o', i, ' = ', get(key), '; ',
         (operator == "^" ?
           ['if ((o', i, ' instanceof Array) ? !o', i, '.length : !o', i, ') { s += "', block(context), '"; } '] :
-          ['if (typeof(o', i, ') == "boolean" && o', i, ') { s += "', block(context), '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o',
+          ['if ((typeof(o', i, ') == "boolean" || typeof(o', i, ') == "string") && o', i, ') { s += "', block(context), '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o',
             i, '.length; i', i, '++) { vars.push(o', i, '[i', i, ']); s += "', block(context), '"; vars.pop(); }}']
         ).join(''), '; s += "'].join('');
     }));
