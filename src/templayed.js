@@ -15,7 +15,7 @@ templayed = function(template, vars) {
   var get = function(path, i) {
     i = 1; path = path.replace(/\.\.\//g, function() { i++; return ''; });
     var js = ['vars[vars.length - ', i, ']'], keys = (path == "." ? [] : path.split(".")), j = 0;
-    for (j; j < keys.length; j++) { js.push('.' + keys[j]); };
+    for (j; j < keys.length; j++) { js.push('["' + keys[j] + '"]'); };
     return js.join('');
   }, tag = function(template) {
     return template.replace(/\{\{(!|&|\{)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
@@ -30,14 +30,16 @@ templayed = function(template, vars) {
       var i = inc++;
       return ['"; var o', i, ' = ', get(key), '; ',
         (operator == "^" ?
-          ['if ((o', i, ' instanceof Array) ? !o', i, '.length : !o', i, ') { s += "', block(context), '"; } '] :
-          ['if (typeof(o', i, ') == "boolean" && o', i, ') { s += "', block(context), '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o',
-            i, '.length; i', i, '++) { vars.push(o', i, '[i', i, ']); s += "', block(context), '"; vars.pop(); }}']
+          ['if ((o', i, ' instanceof Array) ? !o', i, '.length : !o', i, ') { s += "', block(context), '" } '] :
+          ['if (o', i, ') { if (typeof(o', i, ') == "boolean") { s += "', block(context), 
+            '" } else { if (!(o', i, ' instanceof Array)) o', i, '=[o', i, ']; for (var i', i, ' = 0; i', i, ' < o',
+            i, '.length; i', i, '++) { vars.push(o', i, '[i', i, ']); s += "', block(context),
+            '"; vars.pop() }}}']
         ).join(''), '; s += "'].join('');
     }));
   }, inc = 0;
 
-  return new Function('vars', 's', 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/[\n|\r\n]/g, '\\n')) + '"; return s;');
+  return new Function('vars', 's', 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/\r\n/g, '\\n')) + '"; return s');
 };
 
 templayed.version = '{version}';
