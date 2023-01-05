@@ -1,32 +1,32 @@
 # templayed.js
 
-The **fastest** and **smallest** Mustache compliant Javascript templating library written in **1806 bytes** (uncompressed)
+The **fastest** and **smallest** Mustache compliant Javascript templating library written in **2167 bytes** (uncompressed)
 
 ## Introduction
 
 [Mustache.js](https://github.com/janl/mustache.js) is one of the best known Javascript templating libraries out there. I am also using it within several projects. The only downside you could imagine is its size:
 
-* uncompressed: 15050 bytes
-* YUI compressed: 5053 bytes
-* YUI compressed and gzipped: 2271 bytes
+- uncompressed: 15050 bytes
+- YUI compressed: 5053 bytes
+- YUI compressed and gzipped: 2271 bytes
 
 So out of pure curiosity, I have written `templayed.js` to see whether it can be written more compact with the following as result:
 
-* uncompressed: 1806 bytes
-* YUI compressed: 1281 bytes
-* YUI compressed and gzipped: 643 bytes
+- uncompressed: 2167 bytes
+- YUI compressed: 1324 bytes
+- YUI compressed and gzipped: 655 bytes
 
 It does not have dependencies and it supports the following Mustache.js features:
 
-* variables
-* variables accessed through properties of objects using the dot notation
-* HTML escaping of variables
-* shown / hidden sections
-* lists
-* current item referrals
-* functions
-* inverted sections
-* comments
+- variables
+- variables accessed through properties of objects using the dot notation
+- HTML escaping of variables
+- shown / hidden sections
+- lists
+- current item referrals
+- functions
+- inverted sections
+- comments
 
 This leaves out partials and streaming.
 
@@ -103,8 +103,8 @@ Please visit [http://archan937.github.com/templayed.js](http://archan937.github.
 
 ## TODO
 
-* Automatically cache compiled template functions
-* Support custom delimiters (e.g. <% %>)
+- Automatically cache compiled template functions
+- Support custom delimiters (e.g. <% %>)
 
 ## Contact me
 
@@ -112,9 +112,9 @@ For support, remarks and requests, please mail me at [paul.engel@holder.nl](mail
 
 ## License
 
-Copyright (c) 2012 Paul Engel, released under the MIT license
+Copyright (c) 2023 Paul Engel, released under the MIT license
 
-[http://gettopup.com](http://gettopup.com) - [http://github.com/archan937](http://github.com/archan937) - [http://twitter.com/archan937](http://twitter.com/archan937) - [pm_engel@icloud.com](mailto:pm_engel@icloud.com)
+[http://github.com/archan937](http://github.com/archan937) - [http://twitter.com/archan937](http://twitter.com/archan937) - [pm_engel@icloud.com](mailto:pm_engel@icloud.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
