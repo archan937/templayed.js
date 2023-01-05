@@ -1,14 +1,13 @@
 if (typeof(templayed) == "undefined") {
 
 // *
-// * templayed.js 0.2.1 (Uncompressed)
+// * templayed.js 0.2.3 (Uncompressed)
 // * The fastest and smallest Mustache compliant Javascript templating library written in 1806 bytes (uncompressed)
 // *
-// * (c) 2012 Paul Engel (Internetbureau Holder B.V.)
-// * Except otherwise noted, templayed.js is licensed under
-// * http://creativecommons.org/licenses/by-sa/3.0
+// * (c) 2023 Paul Engel
+// * templayed.js is licensed under MIT license
 // *
-// * $Date: 2012-10-14 01:17:01 +0100 (Sun, 14 October 2012) $
+// * $Date: 2023-01-05 11:55:52 +0100 (Thu, 05 January 2023) $
 // *
 
 templayed = function(template, vars) {
@@ -22,7 +21,7 @@ templayed = function(template, vars) {
     return template.replace(/\{\{(!|&|\{)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
       if (operator == "!") return '';
       var i = inc++;
-      return ['"; var o', i, ' = ', get(context), ', s', i, ' = (((typeof(o', i, ') == "function" ? o', i, '.call(vars[vars.length - 1]) : o', i, ') || "") + ""); s += ',
+      return ['"; var o', i, ' = ', get(context), ', s', i, ' = typeof(o', i, ') == "function" ? o', i, '.call(vars[vars.length - 1]) : o', i, '; s', i,' = ( s', i,' || s', i,' == 0 ? s', i,': "") + ""; s += ',
         (operator ? ('s' + i) : '(/[&"><]/.test(s' + i + ') ? s' + i + '.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/>/g,"&gt;").replace(/</g,"&lt;") : s' + i + ')'), ' + "'
       ].join('');
     });
@@ -38,9 +37,9 @@ templayed = function(template, vars) {
     }));
   }, inc = 0;
 
-  return new Function("vars", 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/\n/g, '\\n')) + '"; return s;');
+  return new Function('vars', 's', 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/(\n|\r\n)/g, '\\n')) + '"; return s;');
 };
 
-templayed.version = "0.2.1";
+templayed.version = '0.2.3';
 
 }
