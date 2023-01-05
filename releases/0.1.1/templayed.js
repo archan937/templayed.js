@@ -2,7 +2,7 @@ if (typeof(templayed) == "undefined") {
 
 // *
 // * templayed.js 0.1.1 (Uncompressed)
-// * A micro (Mustache.js compliant) Javascript templating library written in 1751 bytes (uncompressed)
+// * A micro (Mustache.js compliant) Javascript templating library written in 1716 bytes (uncompressed)
 // *
 // * (c) 2012 Paul Engel
 // * templayed.js is licensed under MIT license
