@@ -37,10 +37,10 @@ templayed = function(template, vars) {
       
       return ['"; var o', i, ' = ', get(key), '; ', logic.join(''), '; s += "'].join('');
     }));
-  },inc = 0; 
+  },inc = 0;
 
   return new Function('vars', 's', 'vars = [vars], s = "' + block(template.replace(/"/g, '\\"').replace(/(\n|\r\n)/g, '\\n')) + '"; return s;');
-}; 
+};
 
 templayed.version = '{version}';
 
