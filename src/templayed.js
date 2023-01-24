@@ -29,7 +29,7 @@ templayed = function(template, vars) {
   },block = function(template) {
     return tag(template.replace(/\{\{(\^|#|\+)(.*?)}}(.*?)\{\{\/\2}}/g, function(_, operator, key, context) {
       var i = inc++,
-        context = block(context)
+        context = block(context),
         logic = ['if (typeof(o', i, ') == "boolean" && o', i, ') { s += "', context, '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o', i, '.length; i', i, '++) { vars.push(o', i, '[i', i, ']); s += "', context, '"; vars.pop(); }}'];
       
       if (/(.*)\.length$/gi.test(key)) { logic = lengthCheck(key, context, operator != '^'); }
